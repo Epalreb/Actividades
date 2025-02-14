@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Tracker</title>
+    <script>
+        async function enviarDatos() {
+            let datos = {
+                Codigo: document.getElementById("codigo").value,
+                Actividad: document.getElementById("actividad").value,
+                Comentario: document.getElementById("comentario").value,
+                HoraInicio: document.getElementById("horaInicio").value,
+                HoraFin: document.getElementById("horaFin").value
+            };
+
+            let response = await fetch("https://script.google.com/macros/s/AKfycbxw1bE-inSy5Mc_flh0yohdg1HytwRnr5kE2VCvoii_-3EcSzxwzKEcpUZwJlrdr69H/exec", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(datos)
+            });
+
+            let resultado = await response.json();
+            alert(resultado.message);
+        }
+    </script>
+</head>
+<body>
+    <h2>Registrar Actividad</h2>
+    <form onsubmit="event.preventDefault(); enviarDatos();">
+        Código: <input type="text" id="codigo" required><br><br>
+        Actividad: <input type="text" id="actividad" required><br><br>
+        Comentario: <input type="text" id="comentario"><br><br>
+        Hora Inicio: <input type="time" id="horaInicio" required><br><br>
+        Hora Fin: <input type="time" id="horaFin"><br><br>
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+</html>
+
